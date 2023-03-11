@@ -8,7 +8,12 @@ Created on Sat Mar 11 22:12:17 2023
 from scrapper import Site
 import pandas as pd
 import numpy as np
+from PyQt5 import QtWidgets, uic
 
-site = Site()
+uiFile = "route-planner.ui"
 
-site.scrapeData()
+application = QtWidgets.QApplication([])
+window = uic.loadUi(uiFile)
+
+window.show()
+application.exec_()
