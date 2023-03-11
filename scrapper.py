@@ -26,3 +26,4 @@ class Site():
         response = requests.get(self.site_link)
         whetherData = pd.read_html(response.text)
         return whetherData
+    
