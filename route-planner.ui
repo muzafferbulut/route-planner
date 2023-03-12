@@ -6,12 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>407</width>
-    <height>329</height>
+    <width>400</width>
+    <height>250</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>250</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>250</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Route Planner</string>
   </property>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
@@ -35,6 +47,9 @@
     </item>
     <item>
      <widget class="QToolButton" name="toolButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string>...</string>
       </property>
@@ -46,7 +61,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>130</y>
+     <y>120</y>
      <width>381</width>
      <height>51</height>
     </rect>
@@ -61,66 +76,28 @@
     </item>
     <item>
      <widget class="QSlider" name="horizontalSlider">
+      <property name="cursor">
+       <cursorShape>SizeHorCursor</cursorShape>
+      </property>
+      <property name="maximum">
+       <number>45</number>
+      </property>
+      <property name="sliderPosition">
+       <number>1</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>200</y>
-     <width>381</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>Graphic Type : </string>
+       <string>01</string>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="comboBox">
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <item>
-       <property name="text">
-        <string>Heatmap</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Line Graph</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Bar Chart</string>
-       </property>
-      </item>
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>270</y>
-     <width>161</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
@@ -140,18 +117,37 @@
     <string>Route Planner :</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QWidget" name="horizontalLayoutWidget_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>280</y>
-     <width>75</width>
-     <height>23</height>
+     <x>10</x>
+     <y>180</y>
+     <width>381</width>
+     <height>51</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Export</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>Export</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
