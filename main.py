@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 from PyQt5 import QtWidgets, uic
 
-uiFile = "route-planner.ui"
+uiFile = "route_planner.ui"
 
 application = QtWidgets.QApplication([])
 window = uic.loadUi(uiFile)
