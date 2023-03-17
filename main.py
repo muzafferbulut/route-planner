@@ -23,11 +23,18 @@ class RoutePlanner(QMainWindow):
         self.exportButton.clicked.connect(self.export_data)
         self.getReportButton.accepted.connect(self.generate_report)
         self.getReportButton.rejected.connect(self.close)
+        self.horizontalSlider.valueChanged.connect(self.somefuc)
         
+        # dataShp = gpd.read_file("D:/personal/route-planner/boundary/tr_boundary.shp")
+
         # folium map
         foliumMap = folium.Map(location=[38.52077, 35.85411], zoom_start=6)
+        # dataShp.explore(m=foliumMap)
         data = foliumMap._repr_html_()
         self.webEngineView.setHtml(data)
+    
+    def somefuc(self):
+        print(self.horizontalSlider.value())
 
     def open_file(self):
         print("clicked tool button")
