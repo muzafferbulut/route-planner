@@ -27,6 +27,11 @@ class RoutePlanner(QMainWindow):
         
         # folium map
         self.foliumMap = folium.Map(location=[38.52077, 35.85411], zoom_start=6)
+        
+        dataShp = gpd.read_file("C:\MyFiles\Kişisel\cekim.shp")
+        
+        folium.GeoJson(dataShp).add_to(self.foliumMap)
+        
         self.webEngineView.setHtml(self.foliumMap._repr_html_())
 
     def getSliderValue(self):
@@ -35,15 +40,17 @@ class RoutePlanner(QMainWindow):
     def openFile(self):
         self.selectedFile = []
         self.fileDialog = QFileDialog()
+        self.fileDialog.setNameFilter("ESRI Shapefiles (*.shp)")
+        self.fileDialog.setFileMode(QFileDialog.ExistingFile)
         self.fileDialog.exec_()
         self.selectedFile = self.fileDialog.selectedFiles()
         self.filePathLineEdit.setText(self.selectedFile[0])
 
     def exportData(self):
-        print(self.selectedFile[0])
+        print("clicked export button.")
 
     def generateReport(self):
-        print("clicked get report")
+        print("clicked get report button.")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
