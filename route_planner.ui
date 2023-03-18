@@ -101,9 +101,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="slideLabel">
+       <widget class="QLabel" name="sliderLabel">
+        <property name="font">
+         <font>
+          <family>Lato Black</family>
+          <pointsize>14</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>01</string>
+         <string>1</string>
         </property>
        </widget>
       </item>
