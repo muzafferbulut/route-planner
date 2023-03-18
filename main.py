@@ -6,7 +6,7 @@ Created on Sat Mar 11 22:12:17 2023
 """
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt5.uic import loadUi
 from scrapper import Site
 from PyQt5 import QtWebEngineWidgets
@@ -19,23 +19,26 @@ class RoutePlanner(QMainWindow):
         super(RoutePlanner, self).__init__()
         loadUi('route_planner.ui', self)
         
-        self.openFilePattButton.clicked.connect(self.open_file)
-        self.exportButton.clicked.connect(self.export_data)
-        self.getReportButton.accepted.connect(self.generate_report)
+        self.openFilePattButton.clicked.connect(self.openFile)
+        self.exportButton.clicked.connect(self.exportData)
+        self.getReportButton.accepted.connect(self.generateReport)
         self.getReportButton.rejected.connect(self.close)
         
         # folium map
-        foliumMap = folium.Map(location=[38.52077, 35.85411], zoom_start=6)
-        data = foliumMap._repr_html_()
-        self.webEngineView.setHtml(data)
+        self.foliumMap = folium.Map(location=[38.52077, 35.85411], zoom_start=6)
+        self.webEngineView.setHtml(self.foliumMap._repr_html_())
 
-    def open_file(self):
-        print("clicked tool button")
+    def openFile(self):
+        self.selectedFile = []
+        self.fileDialog = QFileDialog()
+        self.fileDialog.exec_()
+        self.selectedFile = self.fileDialog.selectedFiles()
+        self.filePathLineEdit.setText(self.selectedFile[0])
 
-    def export_data(self):
-        print("clicked export data!")
+    def exportData(self):
+        print(self.selectedFile[0])
 
-    def generate_report(self):
+    def generateReport(self):
         print("clicked get report")
 
 if __name__ == '__main__':
