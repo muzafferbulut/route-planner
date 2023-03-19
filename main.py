@@ -62,8 +62,13 @@ class RoutePlanner(QMainWindow):
     def drawRouteOnMap(self):
         newRoute = gpd.read_file(self.selectedFile)
         folium.GeoJson(newRoute).add_to(self.foliumMap)
-        min_lon, min_lat, max_lon, max_lat = newRoute.total_bounds
+        
+        self.fitBounds(newRoute)
+        
+        self.webEngineView.setHtml(self.foliumMap._repr_html_())
 
+    def fitBounds(self, newRoute):
+        min_lon, min_lat, max_lon, max_lat = newRoute.total_bounds
         if min_lon == max_lon and min_lat == max_lat:
             # Tüm değerler sıfır ise, harita boyutlarını manuel olarak ayarla
             map_center = [min_lat, min_lon]
@@ -71,10 +76,8 @@ class RoutePlanner(QMainWindow):
         else:
             # Harita boyutlarını otomatik olarak ayarla
             bounds = [[min_lat, min_lon], [max_lat, max_lon]]
-            
         self.foliumMap.fit_bounds(bounds)
-        self.webEngineView.setHtml(self.foliumMap._repr_html_())
-
+    
     def exportData(self):
         print("clicked export button.")
 
