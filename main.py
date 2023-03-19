@@ -24,6 +24,7 @@ class RoutePlanner(QMainWindow):
         
         self.openFilePattButton.clicked.connect(self.openFile)
         self.exportButton.clicked.connect(self.exportData)
+        self.resetMapButton.clicked.connect(self.resetMap)
         self.getReportButton.accepted.connect(self.generateReport)
         self.getReportButton.rejected.connect(self.close)
         self.horizontalSlider.valueChanged.connect(self.getSliderValue)
@@ -87,6 +88,9 @@ class RoutePlanner(QMainWindow):
             # Harita boyutlarını otomatik olarak ayarla
             bounds = [[min_lat, min_lon], [max_lat, max_lon]] 
         self.foliumMap.fit_bounds(bounds)
+        
+    def resetMap(self):
+        self.getMap()
         
     def exportData(self):
         print("clicked export data button")

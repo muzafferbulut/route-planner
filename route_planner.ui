@@ -54,6 +54,13 @@
     <item row="4" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
+       <widget class="QPushButton" name="resetMapButton">
+        <property name="text">
+         <string>Reset Map</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="exportButton">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
