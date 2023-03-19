@@ -5,9 +5,12 @@ Created on Sat Mar 11 22:12:17 2023
 @author: Muzaffer Bulut
 """
 import io
+import pandas as pd
 import sys
 import folium
 from folium.plugins.draw import Draw
+from shapely.geometry import LineString
+from simplification.cutil import simplify_coords
 import geopandas as gpd
 from scrapper import Site
 from PyQt5.uic import loadUi
@@ -33,9 +36,9 @@ class RoutePlanner(QMainWindow):
             export=False,
             position="topleft",
             draw_options={
-                "polyline": False,
+                "polyline": True,
                 "rectangle": False,
-                "circle": False,
+                "circle": True,
                 "circlemarker": False,
             },
             edit_options={"poly": {"allowIntersection": False}},
@@ -61,14 +64,24 @@ class RoutePlanner(QMainWindow):
 
     def drawRouteOnMap(self):
         newRoute = gpd.read_file(self.selectedFile)
-        folium.GeoJson(newRoute).add_to(self.foliumMap)
         
-        self.fitBounds(newRoute)
+        coords = [feature.geometry.coords for _, feature in newRoute.iterrows()]
         
-        self.webEngineView.setHtml(self.foliumMap._repr_html_())
+        lines = [LineString(coord) for coord in coords]
 
-    def fitBounds(self, newRoute):
+        df = pd.DataFrame({'geometry': lines})
+        tolerance = 0.00001
+        
+        simple_coords = [simplify_coords(line.coords, tolerance) for line in newRoute.geometry]
+        
+        simple_gdf = gpd.GeoDataFrame(geometry=[LineString(coord) for coord in simple_coords])
+        
+        for _, feature in simple_gdf.iterrows():
+            folium.PolyLine(locations=feature.geometry.coords).add_to(self.foliumMap)
+        
+        #folium.GeoJson(newRoute).add_to(self.foliumMap)
         min_lon, min_lat, max_lon, max_lat = newRoute.total_bounds
+
         if min_lon == max_lon and min_lat == max_lat:
             # Tüm değerler sıfır ise, harita boyutlarını manuel olarak ayarla
             map_center = [min_lat, min_lon]
@@ -76,8 +89,19 @@ class RoutePlanner(QMainWindow):
         else:
             # Harita boyutlarını otomatik olarak ayarla
             bounds = [[min_lat, min_lon], [max_lat, max_lon]]
+            
         self.foliumMap.fit_bounds(bounds)
+        self.webEngineView.setHtml(self.foliumMap._repr_html_())
+        
+    def simplifyGeometries(self):
+        pass
     
+    def reprojectionGeometries(self):
+        pass
+    
+    def fitBounds(self):
+        pass
+
     def exportData(self):
         print("clicked export button.")
 
