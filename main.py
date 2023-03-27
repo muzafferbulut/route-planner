@@ -75,6 +75,10 @@ class RoutePlanner(QMainWindow):
             row = pd.DataFrame({city:row})   
             row = row.transpose()
             report = pd.concat([report, row])
+            
+            report_term = self.getSliderValue()
+            
+            report = report.iloc[:,:report_term]
         
         messageBox = QMessageBox()        
         try:
