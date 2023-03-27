@@ -40,6 +40,7 @@ class RoutePlanner(QMainWindow):
         self.fileDialog.exec_()
         self.selectedFile = self.fileDialog.selectedFiles()
         
+        # dosya seçilmediyse uyarı göster
         if len(self.selectedFile)>0:
             self.citiesFile = self.selectedFile[0]
             self.filePathLineEdit.setText(self.citiesFile)
@@ -50,22 +51,24 @@ class RoutePlanner(QMainWindow):
             messageBox.setWindowTitle("Bilgi")
             messageBox.setStandardButtons(QMessageBox.Ok)
             messageBox.exec_()
-            
+    
+    # kullanıcıdan şehir isimlerinin olduğu excel dosyasının alınması       
     def readCities(self, filename):
         data = pd.read_excel(self.citiesFile)
         return data
 
     def generateReport(self):
-        global report
         site = Site()
         
         citiesDf = self.readCities(self.selectedFile)
         cities = citiesDf.values
-                
-        cityDf = pd.DataFrame(["Şehir"])
-        report = pd.concat([cityDf, site.getTimeSeries()], ignore_index=True).transpose()
+
+        # raporun hazırlanması
+        report = pd.DataFrame({"il/tarih":site.getTimeSeries()}).transpose()
 
         for i in range(len(cities)):
+            
+            # şehirlere tek tek istek atıp gelen verileri yazma
             city = cities[i, 0]
             site.setSiteLink(city)
             data = site.scrapeData()
@@ -74,10 +77,9 @@ class RoutePlanner(QMainWindow):
             row = content.iloc[1]
             row = pd.DataFrame({city:row})   
             row = row.transpose()
+            
             report = pd.concat([report, row])
-            
             report_term = self.getSliderValue()
-            
             report = report.iloc[:,:report_term]
         
         messageBox = QMessageBox()        
