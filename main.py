@@ -52,7 +52,7 @@ class RoutePlanner(QMainWindow):
             messageBox.exec_()
             
     def readCities(self, filename):
-        data = pd.read_excel("cities.xlsx")
+        data = pd.read_excel(self.citiesFile)
         return data
 
     def generateReport(self):
@@ -70,20 +70,25 @@ class RoutePlanner(QMainWindow):
             site.setSiteLink(city)
             data = site.scrapeData()
             content = site.cleanData(data)
-            
-            # --
-            
+
             row = content.iloc[1]
-            
-            row = pd.DataFrame({city:row})
-                        
+            row = pd.DataFrame({city:row})   
             row = row.transpose()
-            
-            report = pd.concat([report, row])           
-        
-        
-        print(report)
-        report.to_excel("report.xlsx")
+            report = pd.concat([report, row])
+                      
+        try:
+            report.to_excel("report.xlsx")
+            messageBox = QMessageBox()
+            messageBox.setIcon(QMessageBox.Information)
+            messageBox.setText("Raporlama tamamlandı.")
+            messageBox.setWindowTitle("Bilgi")
+            messageBox.setStandardButtons(QMessageBox.Ok)
+            messageBox.exec_()
+        except:
+            messageBox.setIcon(QMessageBox.Warning)
+            messageBox.setWindowTitle("Uyarı")
+            messageBox.setText("Raporlamada bir hata oluştu!")
+            messageBox.setStandardButtons(QMessageBox.Ok)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
