@@ -75,10 +75,18 @@ class RoutePlanner(QMainWindow):
             row = pd.DataFrame({city:row})   
             row = row.transpose()
             report = pd.concat([report, row])
-                      
+        
+        messageBox = QMessageBox()        
         try:
-            report.to_excel("report.xlsx")
-            messageBox = QMessageBox()
+            filename, _ = QFileDialog.getSaveFileName(None, "Excel Dosyası Kaydet", "*.xlsx", "Excel Dosyası (*.xlsx)")
+
+            if not filename:
+                exit()
+            
+            if not filename.endswith(".xlsx"):
+                filename += ".xlsx"
+
+            report.to_excel(filename)
             messageBox.setIcon(QMessageBox.Information)
             messageBox.setText("Raporlama tamamlandı.")
             messageBox.setWindowTitle("Bilgi")
