@@ -24,7 +24,6 @@ class Site():
         return self.site_link
     
     def mappingData(self, statement):
-        
         if "yağmurlu" in statement.lower() or "yağmur" in statement.lower() or "yağış" in statement.lower() or "sağanak" in statement.lower():
             return 3
         elif "güneşli" in statement.lower() or "güneş" in statement.lower():
@@ -33,17 +32,22 @@ class Site():
             return 2
         else:
             return 0
-            
-
+        
+    def getTimeSeries(self):
+        data = self.scrapeData()
+        self.timeSeries = data["Tarih"]
+        return self.timeSeries
+        
     def scrapeData(self):
         response = requests.get(self.site_link)
         whetherData = pd.read_html(response.text)
         return whetherData[0]
 
     def cleanData(self, df):
-        global dataWithMapping
         dataWithMapping = pd.DataFrame(columns=["Tarih", "Kod"])
         data = df[["Tarih","Hava durumu"]].values
+        
+        self.timeSeries = df["Tarih"]
         
         for i in range(45):
             row = {"Tarih":data[i,0], "Kod":self.mappingData(data[i,1])}

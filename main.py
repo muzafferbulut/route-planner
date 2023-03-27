@@ -56,24 +56,34 @@ class RoutePlanner(QMainWindow):
         return data
 
     def generateReport(self):
+        global report
         site = Site()
         
         citiesDf = self.readCities(self.selectedFile)
         cities = citiesDf.values
-        
+                
+        cityDf = pd.DataFrame(["Şehir"])
+        report = pd.concat([cityDf, site.getTimeSeries()], ignore_index=True).transpose()
+
         for i in range(len(cities)):
-            
             city = cities[i, 0]
-            
             site.setSiteLink(city)
-            
             data = site.scrapeData()
+            content = site.cleanData(data)
             
-            ret = site.cleanData(data)
+            # --
             
-            print(ret)
+            row = content.iloc[1]
+            
+            row = pd.DataFrame({city:row})
+                        
+            row = row.transpose()
+            
+            report = pd.concat([report, row])           
         
         
+        print(report)
+        report.to_excel("report.xlsx")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
