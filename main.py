@@ -70,8 +70,9 @@ class RoutePlanner(QMainWindow):
             
             # şehirlere tek tek istek atıp gelen verileri yazma
             city = cities[i, 0]
-            site.setSiteLink(city)
-            data = site.scrapeData()
+            link = site.getSiteLink().replace("istanbul",city)
+            print(link)
+            data = site.scrapeData(link)
             content = site.cleanData(data)
 
             row = content.iloc[1]

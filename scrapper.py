@@ -18,10 +18,6 @@ class Site():
 
     def getSiteLink(self):
         return self.site_link
-
-    def setSiteLink(self, cityName):
-        self.site_link = self.site_link.replace("istanbul", cityName)
-        return self.site_link
     
     def mappingData(self, statement):
         if "yağmurlu" in statement.lower() or "yağmur" in statement.lower() or "yağış" in statement.lower() or "sağanak" in statement.lower():
@@ -34,12 +30,12 @@ class Site():
             return 0
         
     def getTimeSeries(self):
-        data = self.scrapeData()
+        data = self.scrapeData(self.getSiteLink())
         self.timeSeries = data["Tarih"]
         return self.timeSeries
         
-    def scrapeData(self):
-        response = requests.get(self.site_link)
+    def scrapeData(self, link):
+        response = requests.get(link)
         whetherData = pd.read_html(response.text)
         return whetherData[0]
 
