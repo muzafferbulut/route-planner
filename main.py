@@ -12,14 +12,14 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 
 class RoutePlanner(QMainWindow):
-    
+
     def __init__(self):
         super(RoutePlanner, self).__init__()
         loadUi('files/route_planner.ui', self)
-        
+
         self.fileManager = FileManager()
         self.site = Site()
-        
+
         self.openFilePattButton.clicked.connect(self.openFile)
         self.getReportButton.accepted.connect(self.generateReport)
         self.getReportButton.rejected.connect(self.close)
@@ -36,7 +36,7 @@ class RoutePlanner(QMainWindow):
     def generateReport(self):
         cities = self.fileManager.readExcel(self.filePath).values
 
-        report = pd.DataFrame({"il/tarih":self.site.getTimeSeries()}).transpose()
+        report = pd.DataFrame({"il":self.site.getTimeSeries()}).transpose()
 
         for i in range(len(cities)):
 
