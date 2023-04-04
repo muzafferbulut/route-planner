@@ -48,5 +48,5 @@ class Site():
         for i in range(45):
             row = {"Tarih":data[i,0], "Kod":self.mappingData(data[i,1])}
             dataWithMapping = pd.concat([dataWithMapping, pd.DataFrame(row, index=[0])], ignore_index=1)
-        
+            
         return dataWithMapping.transpose()

@@ -15,7 +15,7 @@ class RoutePlanner(QMainWindow):
     
     def __init__(self):
         super(RoutePlanner, self).__init__()
-        loadUi('route_planner.ui', self)
+        loadUi('files/route_planner.ui', self)
         
         self.fileManager = FileManager()
         self.site = Site()
@@ -28,7 +28,7 @@ class RoutePlanner(QMainWindow):
     def getSliderValue(self):
         self.sliderLabel.setText(str(self.horizontalSlider.value()))
         return self.horizontalSlider.value()
-    
+
     def openFile(self):
         self.filePath = self.fileManager.selectFile()
         self.filePathLineEdit.setText(self.filePath)
@@ -39,7 +39,7 @@ class RoutePlanner(QMainWindow):
         report = pd.DataFrame({"il/tarih":self.site.getTimeSeries()}).transpose()
 
         for i in range(len(cities)):
-            
+
             # şehirlere tek tek istek atıp gelen verileri yazma
             city = cities[i, 0]
             link = self.site.getSiteLink().replace("istanbul",city)
@@ -49,11 +49,11 @@ class RoutePlanner(QMainWindow):
             row = content.iloc[1]
             row = pd.DataFrame({city:row})   
             row = row.transpose()
-            
+
             report = pd.concat([report, row])
             report_term = self.getSliderValue()
             report = report.iloc[:,:report_term]
-             
+
         try:
             self.fileManager.saveReport(report)
             self.fileManager.infoMessage("Raporlama tamamlandı.")
