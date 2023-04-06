@@ -9,7 +9,8 @@ import pandas as pd
 from Scrapper import Site
 from FileManager import FileManager
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import QtWebEngineWidgets
 
 class RoutePlanner(QMainWindow):
 
